@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface DataPoint {
+  value: number;
+  date: string;
+}
+
 export interface Chart {
     id: string;
     name: string;
     chartType: string;
     color: string;
-    dataseries: { value: number; date: string }[];
+    dataseries: DataPoint[];
     xAxisLabel: string;
     yAxisLabel: string;
     description: string;
@@ -32,10 +37,13 @@ const chartSlice = createSlice({
     removeChart: (state, action: PayloadAction<string>) => {
       state.charts = state.charts.filter(chart => chart.id !== action.payload);
     },
-    editChart: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      const chart = state.charts.find(chart => chart.id === action.payload.id);
-      if (chart) {
-        chart.name = action.payload.name;
+    editChart: (state, action: PayloadAction<Partial<Chart> & { id: string }>) => {
+      const index = state.charts.findIndex(chart => chart.id === action.payload.id);
+      if (index !== -1) {
+        state.charts[index] = {
+          ...state.charts[index],
+          ...action.payload,
+        };
       }
     },
   },
