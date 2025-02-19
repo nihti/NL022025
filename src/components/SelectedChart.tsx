@@ -14,6 +14,7 @@ interface SensorChart {
     dataseries: DataPoint[];
     xAxisLabel: string | null | undefined;
     yAxisLabel: string | null | undefined;
+    description: string | null | undefined;
 }
 
 interface SelectedChartProps {
@@ -85,6 +86,11 @@ const SelectedChart: React.FC<SelectedChartProps> = ({ chart }) => {
         </Box>
         {/* Highcharts Chart */}
         <HighchartsReact highcharts={Highcharts} options={options} />
+        {chart.description && (
+          <div style={{ marginTop: "20px", fontStyle: "italic", fontSize: "14px" }}>
+            {chart.description}
+          </div>
+        )}
       </Box>
     );
   };
