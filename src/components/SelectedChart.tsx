@@ -9,15 +9,18 @@ interface DataPoint {
 }
 
 interface SensorChart {
-  yAxisLabel: string | null | undefined;
-  xAxisLabel: string | null | undefined;
-  name: string;
-  dataseries: DataPoint[];
+    id: string;
+    name: string;
+    dataseries: DataPoint[];
+    xAxisLabel: string | null | undefined;
+    yAxisLabel: string | null | undefined;
 }
 
 interface SelectedChartProps {
   chart: SensorChart;
 }
+
+const formatDate = (date: Date): string => date.toISOString().split("T")[0];
 
 const SelectedChart: React.FC<SelectedChartProps> = ({ chart }) => {
   // Convert date strings to Date objects
