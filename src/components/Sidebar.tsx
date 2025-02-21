@@ -16,7 +16,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { removeChart } from "../redux/chartSlice";
 import ChartModal from "./ChartModal";
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  openAddChartModal: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
   const charts = useSelector((state: RootState) => state.charts.charts);
   const dispatch = useDispatch();
 
@@ -65,7 +69,7 @@ const Sidebar: React.FC = () => {
         color="primary"
         fullWidth
         style={{ marginBottom: "10px" }}
-        onClick={() => setAddModalOpen(true)}
+        onClick={openAddChartModal}
       >
         + Add Chart
       </Button>
@@ -102,15 +106,6 @@ const Sidebar: React.FC = () => {
           onClose={() => setEditModalOpen(false)}
           initialChartData={chartToEdit}
           isEditMode={true}
-        />
-      )}
-
-      {/* Add Chart Modal */}
-      {addModalOpen && (
-        <ChartModal
-          open={addModalOpen}
-          onClose={() => setAddModalOpen(false)}
-          isEditMode={false}
         />
       )}
     </div>
