@@ -11,7 +11,10 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { removeChart } from "../redux/chartSlice";
 import ChartModal from "./ChartModal";
@@ -29,8 +32,12 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
   const [selectedChartId, setSelectedChartId] = useState<string | null>(null);
   // State for controlling the Edit modal
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
-  // State for controlling the Add modal
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+    // Filter charts based on search input
+    const filteredCharts = charts.filter((chart) =>
+      chart.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   // Handle kebab menu open
   const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>, chartId: string) => {
@@ -76,8 +83,41 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
       {charts.length === 0 ? (
         <p>No charts</p>
       ) : (
+        <>
+      {/* Search Input */}
+      <TextField
+        fullWidth
+        placeholder="Search..."
+        variant="outlined"
+        size="small"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        sx={{
+          mb: 2,
+          backgroundColor: "rgba(255, 255, 255, 0.003)", // Light transparent background
+          borderRadius: "8px", // Rounded corners
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              border: "none", // Remove outline
+            },
+            "&:hover fieldset": {
+              border: "none", // Remove hover outline
+            },
+            "&.Mui-focused fieldset": {
+              border: "none", // Remove focus outline
+            },
+          },
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon color="action" />
+            </InputAdornment>
+          ),
+        }}
+      />
       <List>
-        {charts.map((chart) => (
+        {filteredCharts.map((chart) => (
           <ListItem
             key={chart.id}
             secondaryAction={
@@ -92,6 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
           </ListItem>
         ))}
       </List>
+      </>
       )}
       {/* Kebab Menu */}
       <Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={handleMenuClose}>
