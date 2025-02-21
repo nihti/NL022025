@@ -6,22 +6,22 @@ export interface DataPoint {
 }
 
 export interface Chart {
-    id: string;
-    name: string;
-    chartType: string;
-    color: string;
-    dataseries: DataPoint[];
-    xAxisLabel: string;
-    yAxisLabel: string;
-    description: string;
-  }  
+  id: string;
+  name: string;
+  chartType: string; // Must be a string
+  color: string;     // Must be a string
+  dataseries: { value: number; date: string }[];
+  xAxisLabel: string;
+  yAxisLabel: string;
+  description: string;
+}
 
 interface ChartState {
   charts: Chart[];
 }
 
 const initialState: ChartState = {
-  charts: [],
+  charts: [], // Start with no charts
 };
 
 const chartSlice = createSlice({

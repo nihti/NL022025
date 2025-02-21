@@ -69,6 +69,9 @@ const Sidebar: React.FC = () => {
       >
         + Add Chart
       </Button>
+      {charts.length === 0 ? (
+        <p>No charts</p>
+      ) : (
       <List>
         {charts.map((chart) => (
           <ListItem
@@ -85,7 +88,7 @@ const Sidebar: React.FC = () => {
           </ListItem>
         ))}
       </List>
-
+      )}
       {/* Kebab Menu */}
       <Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={handleMenuClose}>
         <MenuItem onClick={handleEdit}>Edit</MenuItem>

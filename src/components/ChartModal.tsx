@@ -1,5 +1,5 @@
 // src/components/ChartModal.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Dialog,
@@ -8,19 +8,18 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addChart, editChart, Chart } from "../redux/chartSlice";
 import { v4 as uuidv4 } from "uuid";
-// Import the JSON file so we can use it to populate the Dataseries dropdown.
 import sensorData from "../data/dataseries.json";
 
 interface ChartFormInputs {
   name: string;
   chartType: string;
   color: string;
-  dataseries: string; // this will be the sensor name selected from the JSON data
+  dataseries: string; // will store the sensor name selected
   xAxis: string;
   yAxis: string;
   description: string;
@@ -29,7 +28,7 @@ interface ChartFormInputs {
 interface ChartModalProps {
   open: boolean;
   onClose: () => void;
-  initialChartData?: Chart; // when editing, pre-populate the form
+  initialChartData?: Chart; // provided when editing
   isEditMode?: boolean;
 }
 
@@ -42,31 +41,48 @@ const ChartModal: React.FC<ChartModalProps> = ({
   initialChartData,
   isEditMode = false,
 }) => {
-  const { control, handleSubmit, reset } = useForm<ChartFormInputs>({
-    defaultValues: initialChartData
-      ? {
-          name: initialChartData.name,
-          chartType: initialChartData.chartType,
-          color: initialChartData.color,
-          // Assume that for editing, the dataseries was chosen from sensorData;
-          // Here, we use the chart name as a proxy, or store the sensor id if available.
-          dataseries: initialChartData.name,
-          xAxis: initialChartData.xAxisLabel,
-          yAxis: initialChartData.yAxisLabel,
-          description: initialChartData.description,
-        }
-      : {},
-  });
   const dispatch = useDispatch();
 
+  const { control, handleSubmit, reset } = useForm<ChartFormInputs>({
+    defaultValues: {
+        name: initialChartData?.name || "",
+        chartType: initialChartData?.chartType || "",
+        color: initialChartData?.color || "",
+        dataseries: initialChartData?.name || "",
+        xAxis: initialChartData?.xAxisLabel || "",
+        yAxis: initialChartData?.yAxisLabel || "",
+        description: initialChartData?.description || "",
+    },
+  });
+
+  // When the modal opens (or initialChartData changes), reset the form
+  useEffect(() => {
+    if (open) {
+        console.log("Name:", initialChartData?.name);
+        console.log("Chart Type:", initialChartData?.chartType);
+        console.log("Color:", initialChartData?.color);
+        console.log("Dataseries:", initialChartData?.name);
+        console.log("X-Axis:", initialChartData?.xAxisLabel);
+        console.log("Y-Axis:", initialChartData?.yAxisLabel);
+        console.log("Description:", initialChartData?.description);
+      reset({
+        name: initialChartData?.name || "",
+        chartType: initialChartData?.chartType || "",
+        color: initialChartData?.color || "",
+        dataseries: initialChartData?.name || "",
+        xAxis: initialChartData?.xAxisLabel || "",
+        yAxis: initialChartData?.yAxisLabel || "",
+        description: initialChartData?.description || "",
+      });
+    }
+  }, [open, initialChartData, reset]);
+
   const onSubmit = (data: ChartFormInputs) => {
-    // Find the sensor in the JSON file matching the selected dataseries option.
+    // Look up the selected dataseries from the JSON data.
     const sensor = sensorData.find((s: any) => s.name === data.dataseries);
-    // Use the sensor's dataseries array (or empty array if not found)
     const sensorDataseries = sensor ? sensor.dataseries : [];
 
     if (isEditMode && initialChartData) {
-      // Build an updated chart object for editing.
       const updatedChart: Partial<Chart> & { id: string } = {
         id: initialChartData.id,
         name: data.name,
@@ -79,7 +95,6 @@ const ChartModal: React.FC<ChartModalProps> = ({
       };
       dispatch(editChart(updatedChart));
     } else {
-      // Create a new chart object for adding.
       const newChart: Chart = {
         id: uuidv4(),
         name: data.name,
@@ -96,21 +111,29 @@ const ChartModal: React.FC<ChartModalProps> = ({
     onClose();
   };
 
+  // A helper function to render a label with a red asterisk.
+  const renderRequiredLabel = (text: string) => (
+    <span>
+      {text} <span style={{ color: "red" }}>*</span>
+    </span>
+  );
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>{isEditMode ? "Edit Chart" : "Create a New Chart"}</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Chart Name */}
+          {/* Required: Chart Name */}
           <Controller
             name="name"
             control={control}
-            defaultValue=""
             rules={{ required: "Chart name is required" }}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
-                label="Chart Name"
+                label={renderRequiredLabel("Chart Name")}
+                required
+                InputLabelProps={{ required: false }}
                 fullWidth
                 margin="dense"
                 error={!!fieldState.error}
@@ -119,17 +142,18 @@ const ChartModal: React.FC<ChartModalProps> = ({
             )}
           />
 
-          {/* Chart Type Dropdown */}
+          {/* Required: Chart Type Dropdown */}
           <Controller
             name="chartType"
             control={control}
-            defaultValue=""
             rules={{ required: "Chart type is required" }}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 select
-                label="Chart Type"
+                label={renderRequiredLabel("Chart Type")}
+                required
+                InputLabelProps={{ required: false }}
                 fullWidth
                 margin="dense"
                 error={!!fieldState.error}
@@ -144,17 +168,18 @@ const ChartModal: React.FC<ChartModalProps> = ({
             )}
           />
 
-          {/* Color Dropdown */}
+          {/* Required: Color Dropdown */}
           <Controller
             name="color"
             control={control}
-            defaultValue=""
             rules={{ required: "Color is required" }}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 select
-                label="Color"
+                label={renderRequiredLabel("Color")}
+                required
+                InputLabelProps={{ required: false }}
                 fullWidth
                 margin="dense"
                 error={!!fieldState.error}
@@ -169,17 +194,18 @@ const ChartModal: React.FC<ChartModalProps> = ({
             )}
           />
 
-          {/* Dataseries Dropdown (from JSON data) */}
+          {/* Required: Dataseries Dropdown */}
           <Controller
             name="dataseries"
             control={control}
-            defaultValue=""
             rules={{ required: "Dataseries is required" }}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 select
-                label="Dataseries"
+                label={renderRequiredLabel("Dataseries")}
+                required
+                InputLabelProps={{ required: false }}
                 fullWidth
                 margin="dense"
                 error={!!fieldState.error}
@@ -198,7 +224,6 @@ const ChartModal: React.FC<ChartModalProps> = ({
           <Controller
             name="xAxis"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextField {...field} label="X-Axis Name (optional)" fullWidth margin="dense" />
             )}
@@ -208,7 +233,6 @@ const ChartModal: React.FC<ChartModalProps> = ({
           <Controller
             name="yAxis"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextField {...field} label="Y-Axis Name (optional)" fullWidth margin="dense" />
             )}
@@ -218,7 +242,6 @@ const ChartModal: React.FC<ChartModalProps> = ({
           <Controller
             name="description"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextField
                 {...field}

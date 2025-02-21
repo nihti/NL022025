@@ -16,6 +16,10 @@ module.exports = {
                     loader: "ts-loader",
                 },
             },
+            {
+                test: /\.css$/i, // Handles CSS files
+                use: ["style-loader", "css-loader"], // Ensures CSS is loaded correctly
+            },
         ],
     },
     plugins: [
