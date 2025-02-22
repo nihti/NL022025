@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <Box sx={{ display: "flex", alignItems: "center", flexDirection: { xs: "column-reverse", md: "row" } }}>
+      <Box sx={{ display: "flex", alignItems: "center", flexDirection: { xs: "column", md: "row" }, height: "100vh" }}>
         <Sidebar openAddChartModal={() => setAddModalOpen(true)} />
         <div style={{ flex: 1, padding: "20px" }}>
           <Routes>
@@ -23,11 +23,13 @@ const App: React.FC = () => {
         </div>
          {/* Chart Modal (Controlled by App.tsx) */}
           {addModalOpen && (
-            <ChartModal
-              open={addModalOpen}
-              onClose={() => setAddModalOpen(false)}
-              isEditMode={false}
-            />
+            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+              <ChartModal
+                open={addModalOpen}
+                onClose={() => setAddModalOpen(false)}
+                isEditMode={false}
+              />
+            </Box>
           )}
       </Box>
     </Router>

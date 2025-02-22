@@ -20,6 +20,17 @@ module.exports = {
                 test: /\.css$/i, // Handles CSS files
                 use: ["style-loader", "css-loader"], // Ensures CSS is loaded correctly
             },
+            {
+                test: /\.svg$/,
+                use: [
+                  {
+                    loader: "file-loader",
+                    options: {
+                      name: "assets/[name].[hash].[ext]",
+                    },
+                  },
+                ],
+              },
         ],
     },
     plugins: [

@@ -17,7 +17,7 @@ const MainPage: React.FC<MainPageProps> = ({ openAddChartModal }) => {
     // If there are no charts, show a friendly message
     if (charts.length === 0) {
       return (
-        <Box sx={{ textAlign: "center", paddingTop: "20px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', textAlign: "center", paddingTop: "20px", height: "100%" }}>
             <p style={{ fontSize: "18px" }}>No charts created yet</p>
             <Button
               variant="contained"

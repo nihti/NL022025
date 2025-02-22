@@ -120,7 +120,7 @@ const ChartModal: React.FC<ChartModalProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>{isEditMode ? "Edit Chart" : "Create a New Chart"}</DialogTitle>
+      <DialogTitle>{isEditMode ? "Edit Chart" : "Add Chart"}</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Required: Chart Name */}
