@@ -45,26 +45,26 @@ const ChartModal: React.FC<ChartModalProps> = ({
 
   const { control, handleSubmit, reset } = useForm<ChartFormInputs>({
     defaultValues: {
-        name: initialChartData?.name || "",
-        chartType: initialChartData?.chartType || "",
-        color: initialChartData?.color || "",
-        dataseries: initialChartData?.name || "",
-        xAxis: initialChartData?.xAxisLabel || "",
-        yAxis: initialChartData?.yAxisLabel || "",
-        description: initialChartData?.description || "",
+      name: initialChartData?.name || "",
+      chartType: initialChartData?.chartType || "",
+      color: initialChartData?.color || "",
+      dataseries: initialChartData?.name || "",
+      xAxis: initialChartData?.xAxisLabel || "",
+      yAxis: initialChartData?.yAxisLabel || "",
+      description: initialChartData?.description || "",
     },
   });
 
   // When the modal opens (or initialChartData changes), reset the form
   useEffect(() => {
     if (open) {
-        console.log("Name:", initialChartData?.name);
-        console.log("Chart Type:", initialChartData?.chartType);
-        console.log("Color:", initialChartData?.color);
-        console.log("Dataseries:", initialChartData?.name);
-        console.log("X-Axis:", initialChartData?.xAxisLabel);
-        console.log("Y-Axis:", initialChartData?.yAxisLabel);
-        console.log("Description:", initialChartData?.description);
+      console.log("Name:", initialChartData?.name);
+      console.log("Chart Type:", initialChartData?.chartType);
+      console.log("Color:", initialChartData?.color);
+      console.log("Dataseries:", initialChartData?.name);
+      console.log("X-Axis:", initialChartData?.xAxisLabel);
+      console.log("Y-Axis:", initialChartData?.yAxisLabel);
+      console.log("Description:", initialChartData?.description);
       reset({
         name: initialChartData?.name || "",
         chartType: initialChartData?.chartType || "",
@@ -225,7 +225,12 @@ const ChartModal: React.FC<ChartModalProps> = ({
             name="xAxis"
             control={control}
             render={({ field }) => (
-              <TextField {...field} label="X-Axis Name (optional)" fullWidth margin="dense" />
+              <TextField
+                {...field}
+                label="X-Axis Name (optional)"
+                fullWidth
+                margin="dense"
+              />
             )}
           />
 
@@ -234,7 +239,12 @@ const ChartModal: React.FC<ChartModalProps> = ({
             name="yAxis"
             control={control}
             render={({ field }) => (
-              <TextField {...field} label="Y-Axis Name (optional)" fullWidth margin="dense" />
+              <TextField
+                {...field}
+                label="Y-Axis Name (optional)"
+                fullWidth
+                margin="dense"
+              />
             )}
           />
 
@@ -259,7 +269,11 @@ const ChartModal: React.FC<ChartModalProps> = ({
         <Button onClick={onClose} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary">
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          variant="contained"
+          color="primary"
+        >
           {isEditMode ? "Save Changes" : "Save Chart"}
         </Button>
       </DialogActions>

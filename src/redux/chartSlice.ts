@@ -9,7 +9,7 @@ export interface Chart {
   id: string;
   name: string;
   chartType: string; // Must be a string
-  color: string;     // Must be a string
+  color: string; // Must be a string
   dataseries: { value: number; date: string }[];
   xAxisLabel: string;
   yAxisLabel: string;
@@ -35,10 +35,17 @@ const chartSlice = createSlice({
       state.charts.push(action.payload);
     },
     removeChart: (state, action: PayloadAction<string>) => {
-      state.charts = state.charts.filter(chart => chart.id !== action.payload);
+      state.charts = state.charts.filter(
+        (chart) => chart.id !== action.payload
+      );
     },
-    editChart: (state, action: PayloadAction<Partial<Chart> & { id: string }>) => {
-      const index = state.charts.findIndex(chart => chart.id === action.payload.id);
+    editChart: (
+      state,
+      action: PayloadAction<Partial<Chart> & { id: string }>
+    ) => {
+      const index = state.charts.findIndex(
+        (chart) => chart.id === action.payload.id
+      );
       if (index !== -1) {
         state.charts[index] = {
           ...state.charts[index],
@@ -49,5 +56,6 @@ const chartSlice = createSlice({
   },
 });
 
-export const { initializeCharts, addChart, removeChart, editChart } = chartSlice.actions;
+export const { initializeCharts, addChart, removeChart, editChart } =
+  chartSlice.actions;
 export default chartSlice.reducer;

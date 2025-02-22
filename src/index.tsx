@@ -11,39 +11,40 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Create global theme
 const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#1976d2", // MUI default blue
-      },
-      background: {
-        default: "#f4f4f4", // Light gray background
-      },
+  palette: {
+    primary: {
+      main: "#1976d2", // MUI default blue
     },
-    typography: {
-      fontFamily: "Roboto, Arial, sans-serif",
+    background: {
+      default: "#f4f4f4", // Light gray background
     },
-    breakpoints: {
-      values: {
-        xs: 0, // Mobile
-        sm: 600, // Small tablets
-        md: 900, // Larger tablets
-        lg: 1200, // Desktops
-        xl: 1536, // Large screens
-      },
+  },
+  typography: {
+    fontFamily: "Roboto, Arial, sans-serif",
+  },
+  breakpoints: {
+    values: {
+      xs: 0, // Mobile
+      sm: 600, // Small tablets
+      md: 900, // Larger tablets
+      lg: 1200, // Desktops
+      xl: 1536, // Large screens
     },
-  });
-  
+  },
+});
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <CssBaseline />
-                    <App />
-                </LocalizationProvider>
-            </ThemeProvider>
-        </Provider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <CssBaseline />
+          <App />
+        </LocalizationProvider>
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 );
