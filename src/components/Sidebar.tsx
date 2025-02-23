@@ -231,11 +231,13 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 sx={{
+                  mb: { md: 2 }, // Margin bottom: 16px (Only in Desktop)
                   backgroundColor: "rgba(0, 0, 0, 0.06)",
                   borderRadius: "4px",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": { border: "none" },
                     paddingLeft: "10px",
+                    marginBottom: "16px",
                   },
                   "& .MuiInputBase-input": {
                     paddingLeft: "35px",
@@ -253,7 +255,7 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
             {/* Close Button */}
             <IconButton
               onClick={() => setMenuOpen(false)}
-              sx={{ float: "right", mb: 2 }}
+              
             >
               <CloseIcon />
             </IconButton>
@@ -291,7 +293,6 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
             color="primary"
             fullWidth
             onClick={openAddChartModal}
-            sx={{ mb: 2 }}
           >
             + Add Chart
           </Button>
@@ -326,19 +327,14 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
           padding: 2,
           backgroundColor: "#f4f4f4",
           height: "100vh",
+          borderRight: "1px solid rgba(0, 0, 0, 0.12)", // Right border only
         }}
       >
-        {/* Add Chart Button Always Visible on Desktop */}
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={openAddChartModal}
-          sx={{ mb: 2 }}
-        >
-          + Add Chart
-        </Button>
-
+        <img
+          src={logoMobileLarge}
+          alt="Company Logo"
+          style={{ height: "32px", marginBottom: "16px" }}
+        />
         {/* Search Bar Always Visible on Desktop */}
         <TextField
           fullWidth
@@ -348,9 +344,8 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
-            mb: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.003)",
-            borderRadius: "8px",
+            backgroundColor: "rgba(0, 0, 0, 0.06)",
+            borderRadius: "4px",
             "& .MuiOutlinedInput-root": {
               "& fieldset": { border: "none" },
               paddingLeft: "10px",
@@ -367,6 +362,16 @@ const Sidebar: React.FC<SidebarProps> = ({ openAddChartModal }) => {
             ),
           }}
         />
+        {/* Add Chart Button Always Visible on Desktop */}
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={openAddChartModal}
+          sx={{ mt: 2 }}
+        >
+          + Add Chart
+        </Button>
 
         {/* Chart List with Kebab Menu (Desktop) */}
         <List>
