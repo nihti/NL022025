@@ -18,10 +18,20 @@ const App: React.FC = () => {
           alignItems: "center",
           flexDirection: { xs: "column", md: "row" },
           height: "100vh",
+          backgroundColor: { xs: "#fff", md: "rgba(224, 224, 224, 1)"}, // Grey background around main page
         }}
       >
         <Sidebar openAddChartModal={() => setAddModalOpen(true)} />
-        <div style={{ flex: 1, padding: "20px" }}>
+        <Box
+            sx={{
+            flexGrow: 1, // Takes remaining space
+            height: { md: "calc(100% - 48px)" }, // Full height minus top and bottom margin
+            backgroundColor: { md: "#fff" }, // White background inside
+            border: {md: "1px solid rgba(0, 0, 0, 0.12)"}, // Full border around main content
+            borderRadius: {md: "4px"}, // Rounded corners
+            margin: {md: "24px"} 
+            }}
+          >
           <Routes>
             <Route
               path="/"
@@ -37,7 +47,7 @@ const App: React.FC = () => {
             />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
-        </div>
+        </Box>
         {/* Chart Modal (Controlled by App.tsx) */}
         {addModalOpen && (
           <Box
