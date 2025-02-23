@@ -189,7 +189,7 @@ const SelectedChart: React.FC<SelectedChartProps> = ({ chart }) => {
       <HighchartsReact highcharts={Highcharts} options={options} />
       {chart.description && (
         <div
-          style={{ marginTop: "20px", fontStyle: "italic", fontSize: "14px" }}
+          style={{ textAlign: "center", marginTop: "20px", fontSize: "16px" }}
         >
           {chart.description}
         </div>
