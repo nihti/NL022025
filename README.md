@@ -18,8 +18,8 @@ A dynamic React-based chart dashboard that allows users to create, edit, delete,
 
 ### **1️⃣ Clone the Repository**
 ```sh
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/nihti/NL022025.git
+cd NL022025
 ```
 
 ### **2️⃣ Install Dependencies**

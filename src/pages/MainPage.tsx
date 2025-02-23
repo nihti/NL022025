@@ -25,7 +25,7 @@ const MainPage: React.FC<MainPageProps> = ({ openAddChartModal }) => {
           alignItems: "center",
           textAlign: "center",
           paddingTop: "20px",
-          height: "100%",
+          height: "100%",    
         }}
       >
         <p style={{ fontSize: "18px" }}>No charts created yet</p>
